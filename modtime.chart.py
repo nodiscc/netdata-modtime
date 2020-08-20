@@ -17,7 +17,7 @@ ORDER = [
 
 CHARTS = {
     'file_age': {
-        'options': [None, 'Age of file (seconds)', 'seconds', 'age', 'modtime.file_age', 'line'],
+        'options': [None, 'Time since last modification', 'seconds', 'time since last modification', 'modtime.file_age', 'line'],
         'lines': [
             ['file_age', 'file age', 'absolute'],
             ['error', 'error', 'absolute']
