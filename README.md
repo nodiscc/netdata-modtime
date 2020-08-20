@@ -1,6 +1,6 @@
 # netdata-modtime
 
-Check/graph last modification time of files and directories
+Check/graph time since last modification of files
 
 ![](https://i.imgur.com/kP91ldr.png)
 
