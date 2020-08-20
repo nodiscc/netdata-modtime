@@ -2,7 +2,7 @@
 
 Check/graph last modification time of files and directories
 
-![](https://i.imgur.com/FQqBT7o.png)
+![](https://i.imgur.com/kP91ldr.png)
 
 This is a `python.d` plugin for [netdata](https://my-netdata.io/).
 
