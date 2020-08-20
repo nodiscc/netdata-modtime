@@ -25,9 +25,6 @@ CHARTS = {
     }
 }
 
-RE_error = re.compile(r'error,.*')
-RE_warning = re.compile(r'warning,.*')
-RE_info = re.compile(r'info,.*')
 
 class Service(SimpleService):
     def __init__(self, configuration=None, name=None):
