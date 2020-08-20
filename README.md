@@ -36,6 +36,37 @@ systemctl restart netdata
 - Files for which time since last modification should bea measured, and chart refresh time/common `python.d` plugin options can be changed in [`$netdata_install_prefix/etc/netdata/python.d/modtime.conf`](python.d_modtime.conf)
 - Alarm settings can be changed in [`$netdata_install_prefix/etc/netdata/health.d/modtime.conf`](health.d_modtime.conf)
 
+## Usage
+
+To monitor time since last successful execution of a cron job or other scheduled task, have it update the modification time of a file on successful execution, for example:
+
+```bash
+# my daily backup job
+0 1 * * * root rsnapshot daily && touch /var/log/rsnapshot_last_success
+```
+
+[Configure](python.d_modtime.conf) the plugin to watch this file:
+
+```yaml
+last_rsnapshot_success:
+  path: '/var/log/rsnapshot_last_success'
+```
+
+[Configure](health.d_modtime.conf) an alarm/notification when the file age exceeds a threshold.
+
+```yaml
+# Raise a warning when the file is older than 24h30min
+# Raise a critical alert when older than 25h
+  alarm: modtime_last_rsnapshot_success
+     on: modtime_last_rsnapshot_success.file_age
+   calc: $file_age
+  every: 10s
+   warn: $this > 88200
+   crit: $this > 90000
+  units: seconds
+   info: time since last modification
+     to: sysadmin
+```
 
 ## Debug
 
