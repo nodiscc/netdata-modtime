@@ -8,6 +8,8 @@ This is a `python.d` plugin for [netdata](https://my-netdata.io/).
 
 Maximum acceptable age of each watched file can be configured, alarms will be raised if the last modification time is older than this value.
 
+An offical/improved `go.d` version is being worked on at https://github.com/netdata/netdata/issues/9794
+
 
 ## Installation
 
