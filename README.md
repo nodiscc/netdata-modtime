@@ -33,6 +33,9 @@ systemctl restart netdata
 
 ```
 
+You can also install this module using the [`nodiscc.xsrv.monitoring` ansible role](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/monitoring).
+
+
 ## Configuration
 
 - Files for which time since last modification should bea measured, and chart refresh time/common `python.d` plugin options can be changed in [`$netdata_install_prefix/etc/netdata/python.d/modtime.conf`](python.d_modtime.conf)
