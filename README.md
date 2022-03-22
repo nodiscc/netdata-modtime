@@ -1,5 +1,42 @@
 # netdata-modtime
 
+----------------------
+
+**ARCHIVED** - this repository is left public for reference purposes. Checking/alerting on file modification date can now be done with the native netdata [filecheck module](https://learn.netdata.cloud/docs/agent/collectors/go.d.plugin/modules/filecheck) [[1]](https://github.com/netdata/netdata/issues/9794).
+
+This is an [example](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/templates/etc_netdata_go.d_filecheck.conf.d_rsnapshot.conf.j2) netdata filecheck, and corresponding health [alarm](https://gitlab.com/nodiscc/xsrv/-/blob/master/roles/backup/templates/etc_netdata_health.d_filecheck.conf.d_rsnapshot.conf.j2) configuration:
+
+```yaml
+# /etc/netdata/go.d/filecheck.conf
+    files:
+      include:
+        - '/var/log/rsnapshot_last_success'
+```
+
+```yaml
+# raise a critical alarm when the file does not exist
+alarm: filecheck_rsnapshot_last_success_exists
+   on: filecheck_rsnapshot_last_success.file_existence
+ calc: $_var_log_rsnapshot_last_success
+every: 5m
+ crit: $this = 0
+ info: /var/log/rsnapshot_last_success file present
+
+# Raise a warning when the file is older than 24h30min, critical alarm when older than 25h
+alarm: filecheck_rsnapshot_last_success_mtime
+   on: filecheck_rsnapshot_last_success.file_mtime_ago
+ calc: $_var_log_rsnapshot_last_success
+every: 5m
+units: seconds
+ warn: $this > 88200
+ crit: $this > 90000
+ info: /var/log/rsnapshot_last_success file last modification
+
+```
+
+----------------------
+
+
 Check/graph time since last modification of files
 
 ![](https://i.imgur.com/kP91ldr.png)
@@ -7,8 +44,6 @@ Check/graph time since last modification of files
 This is a `python.d` plugin for [netdata](https://my-netdata.io/).
 
 Maximum acceptable age of each watched file can be configured, alarms will be raised if the last modification time is older than this value.
-
-An offical/improved `go.d` version is being worked on at https://github.com/netdata/netdata/issues/9794
 
 
 ## Installation
